@@ -1,0 +1,15 @@
+:root{
+    --primary-color: #007BFF ;
+    --text-color: #F8F9FA;
+    --text-size: 32px;
+}
+
+body{
+    background-color: var(--primary-color);
+    color: var(--text-color);
+    font-size: var(--text-size);
+}
+
+nav, ul{
+    display: flex;
+}
