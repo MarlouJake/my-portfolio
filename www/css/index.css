@@ -1,0 +1,53 @@
+/*
+* Index Styles
+*
+*/
+
+.index-body{
+    color: var(--text-color-d);
+    font-size: var(--text-size-md);
+}
+
+/*.index-main section{
+    background: url(https://marloujake.github.io/portfolio-assets/images/napoli.png) no-repeat center;
+    background-size: cover;
+    height: 100% 
+}*/
+
+nav, ul{
+    display: flex;
+}
+
+.muted-text, .disabled-text{
+    color: var(--text-color-g);
+}
+
+.profile-index{
+    width: 20px;
+    height: 10px;
+    object-fit: cover;
+}
+
+.index-nav, .index-footer{
+    background-color: var(--primary-color-bs-1);
+}
+
+.index-nav a{
+    color: var(--text-size-w);
+}
+
+.index-nav a{
+    text-decoration: none;
+}
+
+.index-nav a{
+    padding: 0.3rem 1rem;
+}
+
+.index-nav-col-3, .index-nav-col-1{
+    padding-bottom: 0.86rem;
+}
+
+.index-nav-col-3 button{
+   color: var(--text-color-lg); 
+}

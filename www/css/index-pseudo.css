@@ -1,0 +1,13 @@
+.index-nav a:hover{
+    color: var(--text-color-w);
+}
+
+.index-nav ul a:hover{
+    color: var(--text-color-g);
+    border-bottom: 2px solid var(--text-color-g);
+}
+
+.index-nav-col-3 button:hover{
+    background-color: var(--secondary-color-os-1);
+    color: var(--text-color-d);
+}

@@ -1,0 +1,17 @@
+.mt-12{
+    margin-top: 12.5rem;
+}
+
+.p-se-1{
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+.border-coral{
+    border: 1px var(--secondary-color-os-1) solid;
+}
+
+.active {
+    color:  var(--secondary-color-os-1) !important;
+    border-bottom: 2px solid var(--secondary-color-os-1);
+}

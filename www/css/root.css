@@ -17,6 +17,7 @@
     --text-color-dg: #2C3E50;
     --text-color-mg: #7F8C8D;
     --text-color-lg: #ECF0F1;
+    --text-color-g: #c4cad3;
 
     --text-size-vsm: 6px;
     --text-size-sm: 12px;
@@ -34,20 +35,4 @@
 }
 
 
-.p-se-1{
-    padding-left: 1rem;
-    padding-right: 1rem;
-}
 
-.index-nav-col-3{
-    padding-bottom: 0.75rem;
-}
-
-.index-nav-col-3 button{
-   color: var(--text-color-lg); 
-}
-
-.index-nav-col-3 button:hover{
-    background-color: var(--secondary-color-os-2);
-    color: var(--color-light);
-}
