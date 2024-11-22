@@ -92,7 +92,5 @@ export default class ViewController{
         } else{
             $(uri).removeClass('active');
         }
-
-        
     }
 }
