@@ -1,7 +1,7 @@
 export default class ViewController{
 
     constructor(url = '', container = '.index-main', data = {}){
-        this.controller = "/view";
+        this.controller = "view";
         this.file_type = ".html";
         this.url = (this.controller + url + this.file_type);
         this.container = container;
@@ -13,9 +13,9 @@ export default class ViewController{
         };
     }
 
-    Profile(url = '', container = '', data = {}) {
+    Home(url = '', container = '', data = {}) {
 
-        this.url = (url.trim() === '') ? '/view/home.html' : url;
+        this.url = (url.trim() === '') ? (this.controller + 'home' + this.file_type) : url;
         this.container = (container.trim() === '') ?  this.container : container;
         this.data =  (Object.keys(data).length > 0) ? data : this.data
         this.params = {
@@ -29,7 +29,7 @@ export default class ViewController{
 
     About(url = '', container = '', data = {}) {
 
-        this.url = (url.trim() === '') ? '/view/about.html' : url;
+        this.url = (url.trim() === '') ? (this.controller + 'about' + this.file_type) : url;
         this.container = (container.trim() === '') ?  this.container : container;
 
         this.params = {
@@ -43,7 +43,7 @@ export default class ViewController{
 
     Skills(url = '', container = '', data = {}) {
 
-        this.url = (url.trim() === '') ? '/view/skills.html' : url;
+        this.url = (url.trim() === '') ? (this.controller + 'skills' + this.file_type) : url;
         this.container = (container.trim() === '') ?  this.container : container;
 
         this.params = {

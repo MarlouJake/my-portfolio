@@ -4,7 +4,7 @@ $(document).ready(async function(){
 
     let controller = new ViewController();
 
-    await controller.Profile().LoadContent();
+    await controller.Home().LoadContent();
     await controller.updateActive('/home');
 
     $('.index-nav .nav-ul li').on('click', async function(){
