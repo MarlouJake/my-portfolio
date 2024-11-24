@@ -43,9 +43,9 @@ export default class ViewController{
         return this;
     }
 
-    Contact(uri = '', container = '', data={}){
+    Contact(uri = '', container = '.index-body', data={}){
 
-        this.url = this.setUrl(uri, '/contact');
+        this.url = this.setUrl([uri, '/contact']);
         this.container = (this.isEmptyString(container)) ? this.container : container;
         this.data = this.objectHasKey(data);
 
@@ -118,7 +118,7 @@ export default class ViewController{
             newUrl = (newUrl + this.file_type);
         }
 
-        this.params.url = `${this.full_url}/${newUrl}`;
+        this.params.url = [this.full_url.replace('index.html', ''), newUrl].join('');
         this.params.container = container;
         this.params.data = data;
     }

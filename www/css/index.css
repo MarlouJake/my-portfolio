@@ -57,3 +57,21 @@ nav, ul{
 .nav-brand{
     margin-top: 0.72rem;
 }
+
+.contact-container{
+    z-index: 1060;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    background-color: aliceblue;
+}
+
+.contact-container-backdrop{
+    z-index: 1040;
+    background-color: rgba(240, 248, 255, 0.451);
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    top: 0;
+}
