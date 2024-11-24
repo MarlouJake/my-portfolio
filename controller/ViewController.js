@@ -117,7 +117,8 @@ export default class ViewController{
             newUrl = (newUrl + this.file_type);
         }
 
-        this.params.url = (this.base_url + '/' + newUrl);
+        //this.params.url = (this.base_url + '/' + newUrl);
+        this.params.url = window.location.href;
         this.params.container = container;
         this.params.data = data;
     }
