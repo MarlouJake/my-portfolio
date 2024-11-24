@@ -9,8 +9,7 @@ $(document).ready(async function(){
 
     $('.index-nav .nav-ul li').on('click', async function(){
         let uri = $(this).find('a').data('uri');
-
-        await controller.LoadContent(uri);
+        console.log(await controller.LoadContent(uri));
         await controller.updateActive(uri);
     });
 });

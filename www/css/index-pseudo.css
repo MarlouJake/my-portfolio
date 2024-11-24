@@ -1,11 +1,33 @@
-.index-nav a:hover{
+/*.index-nav a:hover{
     color: var(--text-color-w);
-}
+}*/
 
 .index-nav ul a:hover{
     color: var(--text-color-g) !important;
     border-bottom: 2px solid var(--text-color-g);
 }
+
+.index-nav ul a:focus{
+    color:  var(--text-color-g) !important;
+    border-bottom: 2px solid var(--text-color-g);
+    outline: none;
+}
+
+
+.nav-brand a:focus{
+    color:  var(--text-color-g) !important;
+    border: none;
+    outline: none;
+}
+
+.index-nav-col-3 button:focus{
+    outline: 1px solid var(--secondary-color-os-1);
+}
+
+.resume-button:focus{
+    outline: 1px solid var(--primary-color-bs-1) !important;
+}
+
 
 .index-nav-col-3 button:hover{
     background-color: var(--secondary-color-os-1);

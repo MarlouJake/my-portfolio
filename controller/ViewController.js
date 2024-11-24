@@ -1,80 +1,91 @@
 export default class ViewController{
 
-    constructor(url = '', container = '.index-main', data = {}){
-        this.controller = "view";
-        this.file_type = ".html";
-        this.url = (this.controller + url + this.file_type);
-        this.container = container;
-        this.data = (Object.keys(data).length > 0)  ? data : { default: null };
-        this.params = {
-            url: this.url,
-            container: this.container,
-            data: (Object.keys(data).length > 0) ? this.data : this.defaultData,
-        };
-    }
+    constructor(){
+        this.base_url = window.location.origin;
+        this.resource_path = 'view';
+        this.file_type = '.html';
+        this.url = (this.resource_path + '/index' + this.file_type);
+        this.container = '.index-main';
+        this.data = { default: null };
 
-    Home(url = '', container = '', data = {}) {
-
-        this.url = (url.trim() === '') ? (this.controller + '/home' + this.file_type) : url;
-        this.container = (container.trim() === '') ?  this.container : container;
-        this.data =  (Object.keys(data).length > 0) ? data : this.data
         this.params = {
             url: this.url,
             container: this.container,
             data: this.data
         };
+    }
+
+    Home(url = '', container = '', data = {}) {
+
+        this.url = this.setUrl([url,'/home']);
+        this.container = (this.isEmptyString(container)) ?  this.container : container;
+        this.data = this.objectHasKey(data);
 
         return this;
     }
 
     About(url = '', container = '', data = {}) {
 
-        this.url = (url.trim() === '') ? (this.controller + '/about' + this.file_type) : url;
-        this.container = (container.trim() === '') ?  this.container : container;
-
-        this.params = {
-            url: this.url,
-            element: this.container,
-            data: (Object.keys(data).length > 0) ? data : this.data,
-        };
+        this.url = this.setUrl([url, '/about']);
+        this.container = (this.isEmptyString(container)) ?  this.container : container;
+        this.data = this.objectHasKey(data);
 
         return this;
     }
 
     Skills(url = '', container = '', data = {}) {
 
-        this.url = (url.trim() === '') ? (this.controller + '/skills' + this.file_type) : url;
-        this.container = (container.trim() === '') ?  this.container : container;
+        this.url = this.setUrl([url, '/skills']);
+        this.container = (this.isEmptyString(container)) ?  this.container : container;
+        this.data = this.objectHasKey(data);
 
-        this.params = {
-            url: this.url,
-            element: this.container,
-            data: (Object.keys(data).length > 0) ? data : this.data,
-        };
+        return this;
+    }
+
+    Contact(uri = '', container = '', data={}){
+
+        this.url = this.setUrl(uri, '/contact');
+        this.container = (this.isEmptyString(container)) ? this.container : container;
+        this.data = this.objectHasKey(data);
 
         return this;
     }
 
     async LoadContent(url = '', container = this.container, data = this.data){
 
-        url = (url.trim() !== '') ? (this.controller + url + this.file_type) : this.url;
-
         try{
             const response = await $.ajax({
-                url:  url,
+                url:  this.isEmptyString(url) ? this.url: this.setUrl([url, url]),
                 type: 'GET',
                 data: data,
                 cache: true,
                 timeout: 10000
             });
 
-            $(container).html(response);
+            $(container).fadeOut(100, function(){
+                $(this).html(response).fadeIn().delay(200);
+            });
+
             await this.updateActive(url);
+            await this.updateConstructorParams(url, container, data);
+ 
+
         }
         catch (error){
             this.params.url = url;
-            console.error(`[${error.status} ${error.statusText}] An error occurred while loading the view.
-                \n%cPayload:`, 'font-weight: bold;', `\n\t\t${JSON.stringify(this.params)}`);
+
+            const response = [error.status || '500', error.statusText || 'Internal Server Error', error.responseText];
+            const [status, statusText, responseText] = response;
+            let apiMessage;
+
+            if(responseText){
+                const DOM = new DOMParser();
+                const doc = DOM.parseFromString(responseText, 'text/html');
+                apiMessage = doc.querySelector('pre').textContent;
+            }
+
+            console.error(`[%c${status} ${statusText}`,`font-weight: bold;`,`] An error occurred while loading the view.
+                \n${ apiMessage || error}\n\nPayload:\n\t\t${JSON.stringify(this.params)}`);
         }
 
         return this.params;
@@ -92,5 +103,69 @@ export default class ViewController{
         } else{
             $(uri).removeClass('active');
         }
+    }
+
+    async updateConstructorParams(url, container, data){
+
+        let newUrl = url;
+
+        if(!(url.startsWith(this.resource_path))){
+            newUrl = (this.resource_path + url);
+        }
+
+        if(!(newUrl.endsWith(this.file_type))){
+            newUrl = (newUrl + this.file_type);
+        }
+
+        this.params.url = (this.base_url + '/' + newUrl);
+        this.params.container = container;
+        this.params.data = data;
+    }
+
+    isEmptyString(string){
+        return (string.trim() === '') ? true : false;
+    }
+
+    objectHasKey(object){
+        return (Object.keys(object).length > 0) ? object : { default: null };
+    }
+
+    setUrl(locator = [checkUri = '', setUri = ''], resource_path = this.resource_path, file_type = this.file_type){
+        let [checkUri, setUri] = this.LocatorParameter(locator);
+        let newUrl = checkUri;
+
+        if(this.isEmptyString(checkUri)){
+            return (resource_path + setUri + file_type);
+        } else{
+
+            if(!(checkUri.startsWith(resource_path))){
+                newUrl = (resource_path + checkUri + file_type);
+            }
+
+            return newUrl;
+        }
+
+    }
+
+    LocatorParameter(locator = [checkUri = '', setUri = '']){
+        let [, setUri] = locator;
+
+        if (!Array.isArray(locator)) {
+            throw new Error("Invalid parameter: locator must be an array.");
+        }
+
+        if(locator.length < 2){
+            throw new Error("Invalid parameter: parameter must have 2 elements.");
+        }
+
+        if(this.isEmptyString(setUri)){
+            throw new Error(`\nInvalid parameter: locator element [setUri] cannot be empty string.`);
+        }
+
+        if(!(setUri.startsWith('/'))){
+            throw new Error(`'\nInvalid parameter: locator element [setUri]' ${setUri} must start with: '/' `);
+        }
+
+        return locator;
     }
 }
