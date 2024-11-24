@@ -1,6 +1,7 @@
 export default class ViewController{
 
     constructor(){
+        this.full_url = window.location.href;
         this.base_url = window.location.origin;
         this.resource_path = 'view';
         this.file_type = '.html';
@@ -117,8 +118,7 @@ export default class ViewController{
             newUrl = (newUrl + this.file_type);
         }
 
-        //this.params.url = (this.base_url + '/' + newUrl);
-        this.params.url = window.location.href;
+        this.params.url = `${this.full_url}/${newUrl}`;
         this.params.container = container;
         this.params.data = data;
     }
