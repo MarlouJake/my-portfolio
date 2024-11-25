@@ -1,8 +1,9 @@
-import ViewController from "../../controller/ViewController.js";
-
 $(document).ready(async function(){
 
-    let controller = new ViewController();
+    //let controller = new window.controller;
+    let module = await loadModules(["ViewController"]);
+
+    let controller = await new module.ViewController();
 
     await controller.Home().LoadContent();
     await controller.updateActive('/home');
@@ -23,9 +24,7 @@ $(document).ready(async function(){
             $('.contact-container').fadeOut().remove();
         }
 
-        $('body').append(`<div class="contact-container-backdrop">Contact</div>`);
-        $('body .contact-container-backdrop').append(`<div class="contact-container"></div>`);
-
+        $('body').append(`<div class="contact-container-backdrop"><div class="contact-container"></div></div>`);
         return '.contact-container';
     }
 
