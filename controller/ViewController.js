@@ -52,11 +52,11 @@ export default class ViewController{
         return this;
     }
 
-    async LoadContent(url = '', container = this.container, data = this.data){
+    async LoadContent(uri = '', container = this.container, data = this.data){
 
         try{
             const response = await $.ajax({
-                url:  this.isEmptyString(url) ? this.url: this.setUrl([url, url]),
+                url:  this.isEmptyString(uri) ? this.url: this.setUrl([uri, uri]),
                 type: 'GET',
                 data: data,
                 cache: true,
@@ -67,8 +67,8 @@ export default class ViewController{
                 $(this).html(response).fadeIn().delay(200);
             });
 
-            await this.updateActive(url);
-            await this.updateConstructorParams(url, container, data);
+            await this.updateActive(uri);
+            await this.updateConstructorParams(uri, container, data);
  
 
         }
@@ -92,17 +92,17 @@ export default class ViewController{
         return this.params;
     };
 
-    async updateActive(url){
+    async updateActive(uri){
         $('.index-nav .nav-ul li a').removeClass('active');
 
-        let uri = $('.index-nav .nav-ul li').find('a').filter(function(){
-            return $(this).data('uri') === url;
+        let data_uri = $('.index-nav .nav-ul li').find('a').filter(function(){
+            return $(this).data('uri') === uri;
         });
 
-        if(uri.length){
-            $(uri).addClass('active');
+        if(data_uri.length){
+            $(data_uri).addClass('active');
         } else{
-            $(uri).removeClass('active');
+            $(data_uri).removeClass('active');
         }
     }
 
