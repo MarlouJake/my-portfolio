@@ -16,27 +16,27 @@ export default class ViewController{
         };
     }
 
-    Home(url = '', container = '', data = {}) {
+    Home(uri = '', container = '', data = {}) {
 
-        this.url = this.setUrl([url,'/home']);
+        this.url = this.setUrl([uri,'/home']);
         this.container = (this.isEmptyString(container)) ?  this.container : container;
         this.data = this.objectHasKey(data);
 
         return this;
     }
 
-    About(url = '', container = '', data = {}) {
+    About(uri = '', container = '', data = {}) {
 
-        this.url = this.setUrl([url, '/about']);
+        this.url = this.setUrl([uri, '/about']);
         this.container = (this.isEmptyString(container)) ?  this.container : container;
         this.data = this.objectHasKey(data);
 
         return this;
     }
 
-    Skills(url = '', container = '', data = {}) {
+    Skills(uri = '', container = '', data = {}) {
 
-        this.url = this.setUrl([url, '/skills']);
+        this.url = this.setUrl([uri, '/skills']);
         this.container = (this.isEmptyString(container)) ?  this.container : container;
         this.data = this.objectHasKey(data);
 
@@ -52,11 +52,11 @@ export default class ViewController{
         return this;
     }
 
-    async LoadContent(url = '', container = this.container, data = this.data){
+    async LoadContent(uri = '', container = this.container, data = this.data){
 
         try{
             const response = await $.ajax({
-                url:  this.isEmptyString(url) ? this.url: this.setUrl([url, url]),
+                url:  this.isEmptyString(uri) ? this.url: this.setUrl([uri, uri]),
                 type: 'GET',
                 data: data,
                 cache: true,
@@ -67,13 +67,13 @@ export default class ViewController{
                 $(this).html(response).fadeIn().delay(200);
             });
 
-            await this.updateActive(url);
-            await this.updateConstructorParams(url, container, data);
+            await this.updateActive(uri);
+            await this.updateConstructorParams(uri, container, data);
  
 
         }
         catch (error){
-            this.params.url = url;
+            this.params.url = uri;
 
             const response = [error.status || '500', error.statusText || 'Internal Server Error', error.responseText];
             const [status, statusText, responseText] = response;
@@ -92,33 +92,33 @@ export default class ViewController{
         return this.params;
     };
 
-    async updateActive(url){
+    async updateActive(uri){
         $('.index-nav .nav-ul li a').removeClass('active');
 
-        let uri = $('.index-nav .nav-ul li').find('a').filter(function(){
-            return $(this).data('uri') === url;
+        let data_uri = $('.index-nav .nav-ul li').find('a').filter(function(){
+            return $(this).data('uri') === uri;
         });
 
-        if(uri.length){
-            $(uri).addClass('active');
+        if(data_uri.length){
+            $(data_uri).addClass('active');
         } else{
-            $(uri).removeClass('active');
+            $(data_uri).removeClass('active');
         }
     }
 
-    async updateConstructorParams(url, container, data){
+    async updateConstructorParams(uri, container, data){
 
-        let newUrl = url;
+        let resource_locator = uri;
 
-        if(!(url.startsWith(this.resource_path))){
-            newUrl = (this.resource_path + url);
+        if(!(uri.startsWith(this.resource_path))){
+            resource_locator = [this.resource_path, uri].join('');
         }
 
-        if(!(newUrl.endsWith(this.file_type))){
-            newUrl = (newUrl + this.file_type);
+        if(!(resource_locator.endsWith(this.file_type))){
+            resource_locator = [resource_locator, this.file_type].join('');
         }
 
-        this.params.url = [this.full_url.replace('index.html', ''), newUrl].join('');
+        this.params.url = [this.full_url.replace('index.html', ''), resource_locator].join('');
         this.params.container = container;
         this.params.data = data;
     }
@@ -133,19 +133,22 @@ export default class ViewController{
 
     setUrl(locator = [checkUri = '', setUri = ''], resource_path = this.resource_path, file_type = this.file_type){
         let [checkUri, setUri] = this.LocatorParameter(locator);
-        let newUrl = checkUri;
+        let new_url = checkUri;
+        let url_format = [resource_path, file_type];
 
-        if(this.isEmptyString(checkUri)){
-            return (resource_path + setUri + file_type);
-        } else{
-
-            if(!(checkUri.startsWith(resource_path))){
-                newUrl = (resource_path + checkUri + file_type);
+        try{
+            if(this.isEmptyString(checkUri)){
+                return url_format = [resource_path, setUri, file_type].join('');
+            } else{
+                if(!(checkUri.startsWith(resource_path))){
+                    url_format = [resource_path, checkUri, file_type];
+                    new_url = url_format.join('');
+                }
+                return new_url;
             }
-
-            return newUrl;
+        } catch(error){
+            throw new Error(error);
         }
-
     }
 
     LocatorParameter(locator = [checkUri = '', setUri = '']){
