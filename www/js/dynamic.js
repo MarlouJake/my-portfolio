@@ -10,7 +10,7 @@ $(document).ready(async function(){
     $('.index-nav .nav-ul li, .contact-button').on('click', async function(){
         let uri = $(this).find('a').data('uri') || $(this).data('uri');
 
-        let container = (uri === '/contact') ? await ToggleContactContainer(uri) : '';
+        let container = (uri === '/contact') ? await ToggleContactContainer(uri) : '.index-main';
 
         console.log(await controller.LoadContent(uri, container));
         await controller.updateActive(uri);
