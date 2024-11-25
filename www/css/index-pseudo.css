@@ -1,7 +1,3 @@
-/*.index-nav a:hover{
-    color: var(--text-color-w);
-}*/
-
 .index-nav ul a:hover{
     color: var(--text-color-g) !important;
     border-bottom: 2px solid var(--text-color-g);
