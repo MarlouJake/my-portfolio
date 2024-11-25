@@ -1,9 +1,7 @@
-$(document).ready(async function(){
-
-    //let controller = new window.controller;
-    let module = await loadModules(["ViewController"]);
-
-    let controller = await new module.ViewController();
+window.onload = async function() {
+    let modules = await loadModules(["view-controller"]);
+    let viewController = modules["view-controller"];
+    let controller = await new viewController();
 
     await controller.Home().LoadContent();
     await controller.updateActive('/home');
@@ -11,9 +9,9 @@ $(document).ready(async function(){
     $('.index-nav .nav-ul li, .contact-button').on('click', async function(){
         let uri = $(this).find('a').data('uri') || $(this).data('uri');
 
-        let container = (uri === '/contact') ? await ToggleContactContainer() : '';
+        let container = (uri === '/contact') ? await ToggleContactContainer() : '.index-main';
 
-        await controller.LoadContent(uri, container)
+        console.log(await controller.LoadContent(uri, container));
         await controller.updateActive(uri);
     });
 
@@ -24,16 +22,14 @@ $(document).ready(async function(){
             $('.contact-container').fadeOut().remove();
         }
 
-        $('body').append(`<div class="contact-container-backdrop">Contact</div>`);
-        $('body .contact-container-backdrop').append(`<div class="contact-container"></div>`);
-
+        $('body').append(`<div class="contact-container-backdrop"><div class="contact-container"></div></div>`);
         return '.contact-container';
     }
 
     $('body').on('click', '.close-container', function(){
         $('.contact-container-backdrop').fadeOut().remove();
     });
-});
+}
 
 
 
