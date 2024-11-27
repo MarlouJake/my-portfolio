@@ -1,0 +1,46 @@
+{
+    "environments" : {
+        "cloud" : "deploy",
+        "local": "development"
+    },
+    "protocol" : "https",
+    "domains" : {
+        "github" : "marloujake.github.io",
+        "localhost" : "127.0.0.1"
+    },
+    "cloud-paths" : {
+        "assets" : "assets",
+        "modules" : "modules",
+        "portfolio" : "portfolio",
+        "styles" : "styles"
+    },
+    "local-paths" : {
+        "controller" : "controller",
+        "css" : "css",
+        "icons" : "icons",
+        "js" : "js",
+        "modules" : "modules",
+        "view" : "view",
+        "www": "www"
+    },
+    "assets" : {
+        "config" : "config.json",
+        "icons" : {
+            "favicon" : "favicon.ico"
+        },
+        "style-sheets" : {
+            "root" : "root.css",
+            "classes" : "classes.css",
+            "index" : "index.css",
+            "index-pseudo" : "index-pseudo.css"
+        },
+        "scripts" : {
+            "site" : "site.js",
+            "modules" : {
+                "module-handler" : "module-handler.js",
+                "dynamic-behavior" : "dynamic-behavior.js",
+                "view-controller" : "view-controller.js"
+            }
+        }
+    }
+}

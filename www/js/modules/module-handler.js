@@ -12,7 +12,6 @@ async function loadModules(modules) {
             try{
                 const imported_module = await import(module_path);
                 loadedModules[module] = imported_module.default;
-                console.log(`Module loaded: `, module_path);
             } catch(error){
                 console.error(`Error loading module: ${module}.`, error);
             }
