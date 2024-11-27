@@ -1,5 +1,6 @@
 var environment;
-window.onload = async function(){
+
+document.addEventListener('DOMContentLoaded', async function(){
     let ignore = ['view-controller'];
     environment = "default_environment";
     deployed = false;
@@ -7,7 +8,7 @@ window.onload = async function(){
     try{
         let config = await getConfig();
         let { environments : {cloud = "deploy", local = "local"}, domains  : {github = 'cloudDomain', localhost = 'localDomain'}} = config;
-        let dummyDomain = github;
+        let dummyDomain;
         let currentDomain = dummyDomain || CheckDomain();
         if(currentDomain === localhost){
             environment = local;
@@ -24,7 +25,7 @@ window.onload = async function(){
     } catch (error){
         console.error(error);
     }
-}
+});
 
 function CheckDomain() {
     return window.location.hostname;
