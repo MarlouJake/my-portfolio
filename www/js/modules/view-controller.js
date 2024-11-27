@@ -7,7 +7,7 @@ export default class ViewController{
         this.file_type = '.html';
         this.url = (this.resource_path + '/index' + this.file_type);
         this.container = '.index-main';
-        this.data = { default: null };
+        this.data = { view: "portfolio_view"};
 
         this.params = {
             url: this.url,
@@ -63,13 +63,13 @@ export default class ViewController{
                 timeout: 10000
             });
 
-            $(container).fadeOut(100, function(){
-                $(this).html(response).fadeIn().delay(200);
+            $(container).fadeOut(50, async function(){
+                await $(this).html(response).fadeIn().delay(50);
             });
 
-            await this.updateActive(uri);
-            await this.updateConstructorParams(uri, container, data);
- 
+            this.updateActive(uri);
+            this.updateConstructorParams(uri, container, data);
+
 
         }
         catch (error){
@@ -92,7 +92,7 @@ export default class ViewController{
         return this.params;
     };
 
-    async updateActive(uri){
+    updateActive(uri){
         $('.index-nav .nav-ul li a').removeClass('active');
 
         let data_uri = $('.index-nav .nav-ul li').find('a').filter(function(){
@@ -106,7 +106,7 @@ export default class ViewController{
         }
     }
 
-    async updateConstructorParams(uri, container, data){
+    updateConstructorParams(uri, container, data){
 
         let resource_locator = uri;
 
@@ -128,7 +128,7 @@ export default class ViewController{
     }
 
     objectHasKey(object){
-        return (Object.keys(object).length > 0) ? object : { default: null };
+        return (Object.keys(object).length > 0) ? object : this.data;
     }
 
     setUrl(locator = [checkUri = '', setUri = ''], resource_path = this.resource_path, file_type = this.file_type){

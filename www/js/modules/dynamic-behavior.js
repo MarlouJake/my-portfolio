@@ -1,4 +1,4 @@
-$(document).ready(async function(){
+async function init(){
         let modules = await loadModules(["view-controller"]);
         let viewController = modules["view-controller"];
         let controller = await new viewController();
@@ -24,8 +24,9 @@ $(document).ready(async function(){
         $('body').on('click', '.close-container', function(){
             $('.contact-container-backdrop').fadeOut().remove();
         });
-});
+};
 
+init()
 
 
 
