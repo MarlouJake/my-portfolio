@@ -23,10 +23,10 @@ async function init(){
 
         $('body').on('click', '.close-container', function(){
             $('.contact-container-backdrop').fadeOut().remove();
-        }); 
+        });
 };
 
-await init()
+await init();
 
 
 
